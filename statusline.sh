@@ -6,13 +6,20 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: 🌿 main★ │ Snt 4.6 │ 🟢 Ctx ▓▓▓░░░ 42% │ ⏳ 🟡 ▓▓░░░░ 35% ↻ 2h30m │ $0.12 ⏱ 1h4m
+# Default: 🌿 main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly
 # ════════════════════════════════════════════════════════════════════════════
+
+# ── Windows jq path fix ───────────────────────────────────────────────────────
+if [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]]; then
+    for d in "$HOME/AppData/Local/Microsoft/WinGet/Packages"/jqlang.jq_*/; do
+        [ -d "$d" ] && export PATH="$d:$PATH" && break
+    done
+fi
 
 # ── Configuration (override via environment variables) ────────────────────────
 TIMEZONE="${TIMEZONE:-}"                            # e.g. "America/New_York", empty = system default
 REFRESH_INTERVAL="${REFRESH_INTERVAL:-300}"           # seconds between API calls (0 = every render, risks rate limiting)
-SHOW_WEEKLY="${SHOW_WEEKLY:-0}"                      # set to 1 to show weekly + sonnet quotas
+SHOW_WEEKLY="${SHOW_WEEKLY:-1}"                      # set to 1 to show weekly + sonnet quotas
 USAGE_FILE="${USAGE_FILE:-$HOME/.claude/usage-exact.json}"
 CREDENTIALS_FILE="${CREDENTIALS_FILE:-$HOME/.claude/.credentials.json}"
 
@@ -181,9 +188,8 @@ refresh_usage_api() {
     }' > "${USAGE_FILE}.tmp" && mv "${USAGE_FILE}.tmp" "$USAGE_FILE"
 }
 
-LOCK_FILE="/tmp/statusline-refresh.lock"
 if [ "$(cache_age_sec)" -gt "$REFRESH_INTERVAL" ]; then
-    ( flock -n 9 || exit 0; refresh_usage_api ) 9>"$LOCK_FILE"
+    refresh_usage_api
 fi
 
 # ── Read cached usage metrics ─────────────────────────────────────────────────
@@ -228,9 +234,9 @@ if [ -f "$USAGE_FILE" ]; then
             fi
             make_bar "$SESS_INT"
             if [ -n "$REMAIN_STR" ]; then
-                BLOCK_DISPLAY="⏳ ${BAR_COLOR} ${BAR_STR} ${SESS_INT}% ↻ ${REMAIN_STR}"
+                BLOCK_DISPLAY="${SESS_INT}% session ↻ ${REMAIN_STR}"
             else
-                BLOCK_DISPLAY="⏳ ${BAR_COLOR} ${BAR_STR} ${SESS_INT}%"
+                BLOCK_DISPLAY="${SESS_INT}% session"
             fi
         fi
 
@@ -253,18 +259,8 @@ if [ -f "$USAGE_FILE" ]; then
             fi
             make_bar "$WEEK_INT"; WEEK_COLOR="$BAR_COLOR"
         fi
-        if [ "$SHOW_WEEKLY" = "1" ] && [ -n "$U_SONNET_PCT" ] && [ "$U_SONNET_PCT" != "null" ]; then
-            SONNET_INT="${U_SONNET_PCT%.*}"
-            make_bar "$SONNET_INT"; SONNET_COLOR="$BAR_COLOR"
-        fi
-        if [ -n "$WEEK_INT" ] && [ -n "$SONNET_INT" ]; then
-            WEEK_SONNET_DISPLAY="📅 ${WEEK_COLOR} ${WEEK_INT}% / Snt ${SONNET_COLOR} ${SONNET_INT}%"
-            [ -n "$WEEK_RESET_LABEL" ] && WEEK_SONNET_DISPLAY+=" ↻ ${WEEK_RESET_LABEL}"
-        elif [ -n "$WEEK_INT" ]; then
-            WEEK_SONNET_DISPLAY="📅 ${WEEK_COLOR} ${WEEK_INT}%"
-            [ -n "$WEEK_RESET_LABEL" ] && WEEK_SONNET_DISPLAY+=" ↻ ${WEEK_RESET_LABEL}"
-        elif [ -n "$SONNET_INT" ]; then
-            WEEK_SONNET_DISPLAY="Snt ${SONNET_COLOR} ${SONNET_INT}%"
+        if [ -n "$WEEK_INT" ]; then
+            WEEK_SONNET_DISPLAY="${WEEK_INT}% weekly"
         fi
     fi
 fi
@@ -280,20 +276,9 @@ fi
 # ── Assemble ──────────────────────────────────────────────────────────────────
 PARTS=()
 [ -n "$BRANCH" ] && PARTS+=("🌿 $BRANCH$DIRTY")
-if [ -n "$MODEL" ] && [ -n "$EFFORT_LABEL" ]; then
-    PARTS+=("$MODEL/$EFFORT_LABEL")
-elif [ -n "$MODEL" ]; then
-    PARTS+=("$MODEL")
-fi
-[ -n "$CTX_PERCENT" ]         && PARTS+=("$CTX_COLOR $CTX_LABEL $CTX_BAR ${CTX_PERCENT}%")
+[ -n "$CTX_PERCENT" ]         && PARTS+=("${CTX_PERCENT}% context")
 [ -n "$BLOCK_DISPLAY" ]       && PARTS+=("$BLOCK_DISPLAY")
 [ -n "$WEEK_SONNET_DISPLAY" ] && PARTS+=("$WEEK_SONNET_DISPLAY")
-# Cost + duration (only if non-zero)
-if [ -n "$COST_STR" ] && [ -n "$DURATION_STR" ]; then
-    PARTS+=("$COST_STR ⏱ $DURATION_STR")
-elif [ -n "$COST_STR" ]; then
-    PARTS+=("$COST_STR")
-fi
 
 RESULT=""
 for part in "${PARTS[@]}"; do
