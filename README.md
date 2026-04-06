@@ -30,6 +30,18 @@ This is a **minimal, text-only** fork — no emoji traffic lights, no progress b
 
 ## Install
 
+### One-liner
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/install.sh | bash
+```
+
+With custom refresh interval (e.g. every 2 minutes):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/install.sh | bash -s -- --refresh 120
+```
+
 ### Manual
 
 ```bash

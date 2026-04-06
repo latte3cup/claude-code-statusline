@@ -1,7 +1,8 @@
 #!/bin/bash
 # install.sh — Claude Code Status Line installer
 # Usage: bash install.sh [--refresh SECONDS]
-#    or: curl -fsSL https://raw.githubusercontent.com/ohugonnot/claude-code-statusline/main/install.sh | bash -s -- --refresh 120
+#    or: curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/install.sh | bash
+#    or: curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/install.sh | bash -s -- --refresh 120
 set -euo pipefail
 
 # Parse arguments
@@ -13,7 +14,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-REPO_RAW="https://raw.githubusercontent.com/ohugonnot/claude-code-statusline/main"
+REPO_RAW="https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom"
 HOOKS_DIR="$HOME/.claude/hooks"
 SETTINGS_FILE="$HOME/.claude/settings.json"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-/dev/null}")" 2>/dev/null && pwd || echo "")"
