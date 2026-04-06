@@ -6,15 +6,11 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: 🌿 main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly
+# Default: 🌿 main★ │ Snt 4.6 │ 🟢 Ctx ▓▓▓░░░ 42% │ ⏳ 🟡 ▓▓░░░░ 35% ↻ 2h30m │ $0.12 ⏱ 1h4m
 # ════════════════════════════════════════════════════════════════════════════
 
 # ── Windows jq path fix ───────────────────────────────────────────────────────
-if [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]]; then
-    for d in "$HOME/AppData/Local/Microsoft/WinGet/Packages"/jqlang.jq_*/; do
-        [ -d "$d" ] && export PATH="$d:$PATH" && break
-    done
-fi
+export PATH="$HOME/AppData/Local/Microsoft/WinGet/Packages/jqlang.jq_Microsoft.Winget.Source_8wekyb3d8bbwe:$PATH"
 
 # ── Configuration (override via environment variables) ────────────────────────
 TIMEZONE="${TIMEZONE:-}"                            # e.g. "America/New_York", empty = system default
