@@ -230,9 +230,9 @@ if [ -f "$USAGE_FILE" ]; then
             fi
             make_bar "$SESS_INT"
             if [ -n "$REMAIN_STR" ]; then
-                BLOCK_DISPLAY="${SESS_INT}% session ↻ ${REMAIN_STR}"
+                BLOCK_DISPLAY="\e[97m${SESS_INT}%\e[0m session ↻ ${REMAIN_STR}"
             else
-                BLOCK_DISPLAY="${SESS_INT}% session"
+                BLOCK_DISPLAY="\e[97m${SESS_INT}%\e[0m session"
             fi
         fi
 
