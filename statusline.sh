@@ -271,7 +271,7 @@ fi
 
 # ── Assemble ──────────────────────────────────────────────────────────────────
 PARTS=()
-[ -n "$BRANCH" ] && PARTS+=("🌿 $BRANCH$DIRTY")
+[ -n "$BRANCH" ] && PARTS+=("$BRANCH$DIRTY")
 [ -n "$CTX_PERCENT" ]         && PARTS+=("${CTX_PERCENT}% context")
 [ -n "$BLOCK_DISPLAY" ]       && PARTS+=("$BLOCK_DISPLAY")
 [ -n "$WEEK_SONNET_DISPLAY" ] && PARTS+=("$WEEK_SONNET_DISPLAY")
