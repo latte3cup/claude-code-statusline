@@ -110,10 +110,10 @@ EFFORT_LABEL=""
 SETTINGS_FILE="$HOME/.claude/settings.json"
 if [ -f "$SETTINGS_FILE" ]; then
     case "$(jq -r '.effortLevel // empty' "$SETTINGS_FILE" 2>/dev/null)" in
-        low)    EFFORT_LABEL="lo" ;;
-        medium) EFFORT_LABEL="md" ;;
-        high)   EFFORT_LABEL="hi" ;;
-        max)    EFFORT_LABEL="mx" ;;
+        low)    EFFORT_LABEL="Low" ;;
+        medium) EFFORT_LABEL="Mid" ;;
+        high)   EFFORT_LABEL="High" ;;
+        max)    EFFORT_LABEL="Max" ;;
     esac
 fi
 
@@ -275,6 +275,7 @@ PARTS=()
 [ -n "$CTX_PERCENT" ]         && PARTS+=("${CTX_PERCENT}% context")
 [ -n "$BLOCK_DISPLAY" ]       && PARTS+=("$BLOCK_DISPLAY")
 [ -n "$WEEK_SONNET_DISPLAY" ] && PARTS+=("$WEEK_SONNET_DISPLAY")
+[ -n "$EFFORT_LABEL" ]        && PARTS+=("$EFFORT_LABEL")
 
 RESULT=""
 for part in "${PARTS[@]}"; do
