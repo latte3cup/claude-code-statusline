@@ -30,16 +30,18 @@ This is a **minimal, text-only** fork — no emoji traffic lights, no progress b
 
 ## Install
 
-### One-liner
+### Windows (Git Bash)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/install-windows.sh | bash
+```
+
+jq가 없으면 자동으로 `winget install jqlang.jq`를 실행합니다.
+
+### Linux / macOS
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/install.sh | bash
-```
-
-With custom refresh interval (e.g. every 2 minutes):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/install.sh | bash -s -- --refresh 120
 ```
 
 ### Manual
@@ -48,7 +50,6 @@ curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/cu
 mkdir -p ~/.claude/hooks
 curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/statusline.sh \
   -o ~/.claude/hooks/statusline.sh
-chmod +x ~/.claude/hooks/statusline.sh
 ```
 
 Add to `~/.claude/settings.json`:
@@ -60,15 +61,6 @@ Add to `~/.claude/settings.json`:
     "command": "bash ~/.claude/hooks/statusline.sh"
   }
 }
-```
-
-### Windows (Git Bash)
-
-Same as above. The script auto-detects Windows and adds the `jq` path from WinGet.
-
-Requires `jq`:
-```bash
-winget install jqlang.jq
 ```
 
 ## How it works
