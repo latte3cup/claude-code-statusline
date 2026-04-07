@@ -6,7 +6,7 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: 🌿 main★ │ Snt 4.6 │ 🟢 Ctx ▓▓▓░░░ 42% │ ⏳ 🟡 ▓▓░░░░ 35% ↻ 2h30m │ $0.12 ⏱ 1h4m
+# Default: main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly │ Max
 # ════════════════════════════════════════════════════════════════════════════
 
 # ── Windows jq path fix ───────────────────────────────────────────────────────
