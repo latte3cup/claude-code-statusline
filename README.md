@@ -114,9 +114,7 @@ curl -s "https://api.anthropic.com/api/oauth/usage" \
 ## Uninstall
 
 ```bash
-rm -f ~/.claude/hooks/statusline.sh
-rm -f ~/.claude/usage-exact.json
-# Remove the "statusLine" key from ~/.claude/settings.json
+curl -fsSL https://raw.githubusercontent.com/latte3cup/claude-code-statusline/custom/uninstall.sh | bash
 ```
 
 ## License
