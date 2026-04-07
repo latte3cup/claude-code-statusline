@@ -5,7 +5,7 @@
 This is a **minimal, text-only** fork — no emoji traffic lights, no progress bars, no dollar costs. Just the numbers you need.
 
 ```
-🌿 main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly
+main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly
 ```
 
 > Based on [ohugonnot/claude-code-statusline](https://github.com/ohugonnot/claude-code-statusline). See `main` branch for the original version with full visual indicators.
@@ -23,7 +23,7 @@ This is a **minimal, text-only** fork — no emoji traffic lights, no progress b
 
 | Kept | Example |
 |------|---------|
-| Git branch + dirty | `🌿 main★` |
+| Git branch + dirty | `main★` |
 | Context window % | `5% context` |
 | Session quota + reset countdown | `53% session ↻ 2h30m` |
 | Weekly quota % | `4% weekly` |
