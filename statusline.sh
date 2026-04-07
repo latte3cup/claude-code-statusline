@@ -281,4 +281,5 @@ for part in "${PARTS[@]}"; do
     [ -z "$RESULT" ] && RESULT="$part" || RESULT="$RESULT │ $part"
 done
 
-echo "${RESULT}${REFRESH_SUFFIX}"
+# \e[K = 커서 위치부터 줄 끝까지 클리어 (잔상 방지)
+echo -e "${RESULT}${REFRESH_SUFFIX}\e[K"
