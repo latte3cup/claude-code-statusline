@@ -6,7 +6,7 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly │ Max
+# Default: Opus 4.7 │ main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly ↻ 06-16(화) 03h │ Max
 # ════════════════════════════════════════════════════════════════════════════
 
 # ── Windows jq path fix ───────────────────────────────────────────────────────

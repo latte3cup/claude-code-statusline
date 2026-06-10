@@ -5,7 +5,7 @@
 This is a **minimal, text-only** fork — no emoji traffic lights, no progress bars, no dollar costs. Just the numbers you need.
 
 ```
-main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly │ Max
+Opus 4.7 │ main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly ↻ 06-16(화) 03h │ Max
 ```
 
 > Based on [ohugonnot/claude-code-statusline](https://github.com/ohugonnot/claude-code-statusline). See `main` branch for the original version with full visual indicators.
@@ -14,19 +14,18 @@ main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly │ Max
 
 | Removed | Why |
 |---------|-----|
-| Model / effort display | Already visible in Claude Code UI |
 | Color-coded progress bars (`🟢▓▓▓░░░`) | Cleaner without visual clutter |
 | Session cost (`$0.42`) | Not useful for Max plan users |
 | Duration timer (`⏱ 1h4m`) | Not essential |
 | Sonnet weekly quota | Only tracking combined weekly |
-| Weekly reset date | Unnecessary detail |
 
 | Kept | Example |
 |------|---------|
+| Model name | `Opus 4.7` |
 | Git branch + dirty | `main★` |
 | Context window % | `5% context` |
 | Session quota + reset countdown | `53% session ↻ 2h30m` |
-| Weekly quota % | `4% weekly` |
+| Weekly quota + reset date/time | `4% weekly ↻ 06-16(화) 03h` |
 | Effort level | `Max` / `High` / `Mid` / `Low` |
 
 ## Install
