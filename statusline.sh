@@ -257,6 +257,22 @@ if [ -f "$USAGE_FILE" ]; then
         fi
         if [ -n "$WEEK_INT" ]; then
             WEEK_SONNET_DISPLAY="${WEEK_INT}% weekly"
+            if [ -n "$WEEK_EPOCH" ]; then
+                DAY_EN=$(tz_date "${TIMEZONE}" -d "@$WEEK_EPOCH" +"%a" 2>/dev/null)
+                case "$DAY_EN" in
+                    Mon) DAY_KR="월" ;;
+                    Tue) DAY_KR="화" ;;
+                    Wed) DAY_KR="수" ;;
+                    Thu) DAY_KR="목" ;;
+                    Fri) DAY_KR="금" ;;
+                    Sat) DAY_KR="토" ;;
+                    Sun) DAY_KR="일" ;;
+                    *)   DAY_KR="$DAY_EN" ;;
+                esac
+                WEEK_MMDD=$(tz_date "${TIMEZONE}" -d "@$WEEK_EPOCH" +"%m-%d" 2>/dev/null)
+                WEEK_HH=$(tz_date "${TIMEZONE}" -d "@$WEEK_EPOCH" +"%H" 2>/dev/null)
+                [ -n "$WEEK_MMDD" ] && WEEK_SONNET_DISPLAY="${WEEK_SONNET_DISPLAY} ↻ ${WEEK_MMDD}(${DAY_KR}) ${WEEK_HH}h"
+            fi
         fi
     fi
 fi
@@ -271,6 +287,7 @@ fi
 
 # ── Assemble ──────────────────────────────────────────────────────────────────
 PARTS=()
+[ -n "$MODEL" ]  && PARTS+=("$MODEL")
 [ -n "$BRANCH" ] && PARTS+=("$BRANCH$DIRTY")
 [ -n "$CTX_PERCENT" ]         && PARTS+=("${CTX_PERCENT}% context")
 [ -n "$BLOCK_DISPLAY" ]       && PARTS+=("$BLOCK_DISPLAY")
