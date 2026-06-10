@@ -6,7 +6,7 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: Opus 4.7 │ main★ │ 5% context │ 53% session ↻ 2h30m │ 4% weekly ↻ 06-16(화) 03h │ Max
+# Default: Opus 4.7 (Mid) │ main★ │ my-project │ 5% context │ 53% session ↻ 2h30m │ 4% weekly ↻ 06-16(화) 03h
 # ════════════════════════════════════════════════════════════════════════════
 
 # ── Windows jq path fix ───────────────────────────────────────────────────────
@@ -113,6 +113,7 @@ if [ -f "$SETTINGS_FILE" ]; then
         low)    EFFORT_LABEL="Low" ;;
         medium) EFFORT_LABEL="Mid" ;;
         high)   EFFORT_LABEL="High" ;;
+        xhigh)  EFFORT_LABEL="X.High" ;;
         max)    EFFORT_LABEL="Max" ;;
     esac
 fi
@@ -286,13 +287,15 @@ fi
     BLOCK_DISPLAY=$(echo "$BLOCK_DISPLAY" | sed 's/🟢\|🟡\|🔴/⚠/')
 
 # ── Assemble ──────────────────────────────────────────────────────────────────
+FOLDER_NAME="${CWD//\\//}"; FOLDER_NAME="${FOLDER_NAME##*/}"
+
 PARTS=()
-[ -n "$MODEL" ]  && PARTS+=("$MODEL")
-[ -n "$BRANCH" ] && PARTS+=("$BRANCH$DIRTY")
+[ -n "$MODEL" ]               && PARTS+=("${MODEL}${EFFORT_LABEL:+ ($EFFORT_LABEL)}")
+[ -n "$BRANCH" ]              && PARTS+=("$BRANCH$DIRTY")
+[ -n "$FOLDER_NAME" ]         && PARTS+=("$FOLDER_NAME")
 [ -n "$CTX_PERCENT" ]         && PARTS+=("${CTX_PERCENT}% context")
 [ -n "$BLOCK_DISPLAY" ]       && PARTS+=("$BLOCK_DISPLAY")
 [ -n "$WEEK_SONNET_DISPLAY" ] && PARTS+=("$WEEK_SONNET_DISPLAY")
-[ -n "$EFFORT_LABEL" ]        && PARTS+=("$EFFORT_LABEL")
 
 RESULT=""
 for part in "${PARTS[@]}"; do
