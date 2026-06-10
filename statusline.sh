@@ -6,7 +6,7 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 18h │ 4% weekly ↻ 06-16(화) 03h
+# Default: Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 06:00 PM │ 4% weekly ↻ 06-16(화) 03h
 # ════════════════════════════════════════════════════════════════════════════
 
 # ── Windows jq path fix ───────────────────────────────────────────────────────
@@ -223,7 +223,9 @@ if [ -f "$USAGE_FILE" ]; then
                         RESET_EPOCH=$(tz_date "${RESET_TZ}" -d "tomorrow $RESET_TIME_STR" +%s 2>/dev/null)
                 fi
                 if [ -n "$RESET_EPOCH" ] && [ "$RESET_EPOCH" -gt "$NOW" ]; then
-                    REMAIN_STR=$(tz_date "${TIMEZONE}" -d "@$RESET_EPOCH" +"%Hh" 2>/dev/null)
+                    REMAIN_STR=$(tz_date "${TIMEZONE}" -d "@$RESET_EPOCH" +"%I:%M %p" 2>/dev/null)
+                    REMAIN_STR="${REMAIN_STR/오전/AM}"
+                    REMAIN_STR="${REMAIN_STR/오후/PM}"
                 elif [ -n "$RESET_EPOCH" ] && [ "$RESET_EPOCH" -le "$NOW" ]; then
                     # Session has reset since last API call — usage is back to ~0%
                     SESS_INT=0

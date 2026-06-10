@@ -5,7 +5,7 @@
 This is a **minimal, text-only** fork — no emoji traffic lights, no progress bars, no dollar costs. Just the numbers you need.
 
 ```
-Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 18h │ 4% weekly ↻ 06-16(화) 03h
+Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 06:00 PM │ 4% weekly ↻ 06-16(화) 03h
 ```
 
 > Based on [ohugonnot/claude-code-statusline](https://github.com/ohugonnot/claude-code-statusline). See `main` branch for the original version with full visual indicators.
@@ -25,7 +25,7 @@ Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 18
 | Git branch + dirty | `main★` |
 | Working directory name | `/my-project` |
 | Context window % | `5% context` |
-| Session quota + reset time (hour) | `53% session ↻ 18h` |
+| Session quota + reset time | `53% session ↻ 06:00 PM` |
 | Weekly quota + reset date/time | `4% weekly ↻ 06-16(화) 03h` |
 
 ## Install
