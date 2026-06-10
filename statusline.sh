@@ -6,7 +6,7 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: Opus 4.7 (Mid) │ main★ │ my-project │ 5% context │ 53% session ↻ 2h30m │ 4% weekly ↻ 06-16(화) 03h
+# Default: Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 18h │ 4% weekly ↻ 06-16(화) 03h
 # ════════════════════════════════════════════════════════════════════════════
 
 # ── Windows jq path fix ───────────────────────────────────────────────────────
@@ -223,7 +223,7 @@ if [ -f "$USAGE_FILE" ]; then
                         RESET_EPOCH=$(tz_date "${RESET_TZ}" -d "tomorrow $RESET_TIME_STR" +%s 2>/dev/null)
                 fi
                 if [ -n "$RESET_EPOCH" ] && [ "$RESET_EPOCH" -gt "$NOW" ]; then
-                    REMAIN_STR=$(format_remaining $(( RESET_EPOCH - NOW )))
+                    REMAIN_STR=$(tz_date "${TIMEZONE}" -d "@$RESET_EPOCH" +"%Hh" 2>/dev/null)
                 elif [ -n "$RESET_EPOCH" ] && [ "$RESET_EPOCH" -le "$NOW" ]; then
                     # Session has reset since last API call — usage is back to ~0%
                     SESS_INT=0
@@ -292,7 +292,7 @@ FOLDER_NAME="${CWD//\\//}"; FOLDER_NAME="${FOLDER_NAME##*/}"
 PARTS=()
 [ -n "$MODEL" ]               && PARTS+=("${MODEL}${EFFORT_LABEL:+ ($EFFORT_LABEL)}")
 [ -n "$BRANCH" ]              && PARTS+=("$BRANCH$DIRTY")
-[ -n "$FOLDER_NAME" ]         && PARTS+=("$FOLDER_NAME")
+[ -n "$FOLDER_NAME" ]         && PARTS+=("/$FOLDER_NAME")
 [ -n "$CTX_PERCENT" ]         && PARTS+=("${CTX_PERCENT}% context")
 [ -n "$BLOCK_DISPLAY" ]       && PARTS+=("$BLOCK_DISPLAY")
 [ -n "$WEEK_SONNET_DISPLAY" ] && PARTS+=("$WEEK_SONNET_DISPLAY")
