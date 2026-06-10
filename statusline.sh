@@ -6,7 +6,7 @@
 # Dependencies: bash, jq, curl
 # License: MIT
 #
-# Default: Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 06:00 PM │ 4% weekly ↻ 06-16(화) 03h
+# Default: Opus 4.7 (Mid) │ main★ │ /my-project │ 5% context │ 53% session ↻ 06:00 PM │ 4% weekly ↻ 06-16(화) 03:00
 # ════════════════════════════════════════════════════════════════════════════
 
 # ── Windows jq path fix ───────────────────────────────────────────────────────
@@ -273,8 +273,8 @@ if [ -f "$USAGE_FILE" ]; then
                     *)   DAY_KR="$DAY_EN" ;;
                 esac
                 WEEK_MMDD=$(tz_date "${TIMEZONE}" -d "@$WEEK_EPOCH" +"%m-%d" 2>/dev/null)
-                WEEK_HH=$(tz_date "${TIMEZONE}" -d "@$WEEK_EPOCH" +"%H" 2>/dev/null)
-                [ -n "$WEEK_MMDD" ] && WEEK_SONNET_DISPLAY="${WEEK_SONNET_DISPLAY} ↻ ${WEEK_MMDD}(${DAY_KR}) ${WEEK_HH}h"
+                WEEK_HH=$(tz_date "${TIMEZONE}" -d "@$WEEK_EPOCH" +"%H:%M" 2>/dev/null)
+                [ -n "$WEEK_MMDD" ] && WEEK_SONNET_DISPLAY="${WEEK_SONNET_DISPLAY} ↻ ${WEEK_MMDD}(${DAY_KR}) ${WEEK_HH}"
             fi
         fi
     fi
